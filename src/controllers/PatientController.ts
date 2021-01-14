@@ -8,8 +8,8 @@ class PatientController {
     const patientRepository = getRepository(Patient);
     const patients = await patientRepository.find();
 
-    if (!patients) {
-      return response.status(404);
+    if (patients.length === 0) {
+      return response.status(404).json({ message: 'not found' });
     }
 
     return response.status(200).json(patients);
@@ -32,6 +32,20 @@ class PatientController {
     const patientRepository = getRepository(Patient);
     const { name, preferred_phone } = request.body;
 
+    if (name === '') {
+      return response.status(400).json({ message: 'name cannot be empty' });
+    }
+
+    const nameIsAlreadyRegistered = await patientRepository.find({
+      where: { name },
+    });
+
+    if (nameIsAlreadyRegistered.length === 1) {
+      return response
+        .status(409)
+        .json({ message: 'name is already registered' });
+    }
+
     const patient = patientRepository.create({
       name,
       preferred_phone,
@@ -53,6 +67,10 @@ class PatientController {
     }
 
     const { name, preferred_phone } = request.body;
+
+    if (name === '') {
+      return response.status(400).json({ message: 'name cannot be empty' });
+    }
 
     patient.name = name;
     patient.preferred_phone = preferred_phone;
