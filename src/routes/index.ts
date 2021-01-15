@@ -3,6 +3,7 @@ import { Router } from 'express';
 import TelephoneController from '../controllers/TelephoneController';
 import PatientController from '../controllers/PatientController';
 import PhisicianController from '../controllers/PhisicianController';
+import AppointmentController from '../controllers/AppointmentController';
 
 const routes = Router();
 
@@ -23,5 +24,11 @@ routes.get('/phisicians/:id', PhisicianController.show);
 routes.post('/phisicians', PhisicianController.store);
 routes.put('/phisicians/:id', PhisicianController.update);
 routes.delete('/phisicians/:id', PhisicianController.delete);
+
+routes.get('/appointments', AppointmentController.index);
+routes.get('/appointments/:id', AppointmentController.show);
+routes.post('/appointments', AppointmentController.store);
+routes.put('/appointments/:id', AppointmentController.update);
+routes.delete('/appointments/:id', AppointmentController.delete);
 
 export default routes;

@@ -6,7 +6,23 @@ import Phisician from '../models/Phisician';
 class PhisicianController {
   public async index(request: Request, response: Response) {
     const phisicianRepository = getRepository(Phisician);
-    const phisicians = await phisicianRepository.find();
+    const { search } = request.query;
+    let phisicians: Array<Phisician> = [];
+
+    if (!search) {
+      const allPhisicians = await phisicianRepository.find();
+      phisicians = allPhisicians;
+    } else {
+      const allPhisicians = await phisicianRepository.find();
+
+      allPhisicians.map(phisician => {
+        const phisicianMatched = phisician.name.includes(search);
+
+        if (phisicianMatched) {
+          phisicians.push(phisician);
+        }
+      });
+    }
 
     if (phisicians.length === 0) {
       return response.status(404).json({ message: 'not found' });

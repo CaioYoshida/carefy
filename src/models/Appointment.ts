@@ -11,10 +11,10 @@ class Patient {
   @Column('uuid')
   phisician_id: string;
 
-  @Column('time with time zone')
+  @Column('timestamp without time zone')
   start: Date;
 
-  @Column('time with time zone')
+  @Column('timestamp without time zone')
   end: Date;
 }
 

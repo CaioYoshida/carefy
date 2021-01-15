@@ -6,7 +6,23 @@ import Patient from '../models/Patient';
 class PatientController {
   public async index(request: Request, response: Response) {
     const patientRepository = getRepository(Patient);
-    const patients = await patientRepository.find();
+    const { search } = request.query;
+    let patients: Array<Patient> = [];
+
+    if (!search) {
+      const allPatients = await patientRepository.find();
+      patients = allPatients;
+    } else {
+      const allPatients = await patientRepository.find();
+
+      allPatients.map(patient => {
+        const patientMatched = patient.name.includes(search);
+
+        if (patientMatched) {
+          patients.push(patient);
+        }
+      });
+    }
 
     if (patients.length === 0) {
       return response.status(404).json({ message: 'not found' });
