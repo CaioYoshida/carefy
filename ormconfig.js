@@ -1,14 +1,14 @@
 console.log(process.env.DATABASE_URL);
 module.exports = {
   "type": "postgres",
-  "url": process.env.DATABASE_URL,
+  "url": process.env.DATABASE_URL + '?sslmode=require',
   "entities": [
-    "./dist/models/*.ts"
+    "./src/models/*.ts"
   ],
   "migrations": [
-    "./dist/database/migrations/*.ts"
+    "./src/database/migrations/*.ts"
   ],
   "cli": {
     "migrationsDir": "./src/database/migrations"
-  }
+  },
 }
