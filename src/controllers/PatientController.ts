@@ -10,10 +10,14 @@ class PatientController {
     let patients: Array<Patient> = [];
 
     if (!search) {
-      const allPatients = await patientRepository.find();
+      const allPatients = await patientRepository.find({
+        order: { name: 'ASC' },
+      });
       patients = allPatients;
     } else {
-      const allPatients = await patientRepository.find();
+      const allPatients = await patientRepository.find({
+        order: { name: 'ASC' },
+      });
 
       allPatients.map(patient => {
         const patientMatched = patient.name.includes(search);

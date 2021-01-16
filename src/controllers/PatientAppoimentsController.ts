@@ -10,6 +10,7 @@ class PatientAppointmentsController {
 
     const patientAppointments = await appointmentRepository.find({
       where: { patient_id },
+      order: { start: 'ASC' },
     });
 
     if (!patientAppointments) {

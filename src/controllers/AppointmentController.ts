@@ -11,12 +11,16 @@ class AppointmentController {
     let appointments: Array<Appointment> = [];
 
     if (!fromDate && !toDate) {
-      const allAppointments = await appointmentRepository.find();
+      const allAppointments = await appointmentRepository.find({
+        order: { start: 'ASC' },
+      });
       appointments = allAppointments;
     }
 
     if (fromDate) {
-      const allAppointments = await appointmentRepository.find();
+      const allAppointments = await appointmentRepository.find({
+        order: { start: 'ASC' },
+      });
 
       allAppointments.map(appointment => {
         const isAfterComparation = isAfter(
@@ -31,7 +35,9 @@ class AppointmentController {
     }
 
     if (toDate) {
-      const allAppointments = await appointmentRepository.find();
+      const allAppointments = await appointmentRepository.find({
+        order: { start: 'ASC' },
+      });
 
       allAppointments.map(appointment => {
         const isBeforeComparation = isBefore(

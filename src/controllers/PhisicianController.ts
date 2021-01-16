@@ -10,10 +10,14 @@ class PhisicianController {
     let phisicians: Array<Phisician> = [];
 
     if (!search) {
-      const allPhisicians = await phisicianRepository.find();
+      const allPhisicians = await phisicianRepository.find({
+        order: { name: 'ASC' },
+      });
       phisicians = allPhisicians;
     } else {
-      const allPhisicians = await phisicianRepository.find();
+      const allPhisicians = await phisicianRepository.find({
+        order: { name: 'ASC' },
+      });
 
       allPhisicians.map(phisician => {
         const phisicianMatched = phisician.name.includes(search);
