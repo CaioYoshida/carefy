@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
@@ -5,6 +6,8 @@ import cors from 'cors';
 import routes from './routes';
 
 import './database';
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
