@@ -6,10 +6,21 @@ import Telephone from '../models/Telephone';
 class TelephoneController {
   public async index(request: Request, response: Response) {
     const telephoneRepository = getRepository(Telephone);
-    const telephones = await telephoneRepository.find();
+    const { owner } = request.query;
+    let telephones: Array<Telephone> = [];
 
-    if (!telephones) {
-      return response.status(404);
+    if (!owner) {
+      const allTelephones = await telephoneRepository.find();
+      telephones = allTelephones;
+    } else {
+      const ownerTelephones = await telephoneRepository.find({
+        where: { owner_id: owner },
+      });
+      telephones = ownerTelephones;
+    }
+
+    if (telephones.length === 0) {
+      return response.status(404).json({ message: 'not found' });
     }
 
     return response.status(200).json(telephones);

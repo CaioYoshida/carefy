@@ -4,6 +4,7 @@ import TelephoneController from '../controllers/TelephoneController';
 import PatientController from '../controllers/PatientController';
 import PhisicianController from '../controllers/PhisicianController';
 import AppointmentController from '../controllers/AppointmentController';
+import PatientAppointments from '../controllers/PatientAppoimentsController';
 
 const routes = Router();
 
@@ -18,6 +19,8 @@ routes.get('/patients/:id', PatientController.show);
 routes.post('/patients', PatientController.store);
 routes.put('/patients/:id', PatientController.update);
 routes.delete('/patients/:id', PatientController.delete);
+
+routes.get('/patients/:id/appointments', PatientAppointments.index);
 
 routes.get('/phisicians', PhisicianController.index);
 routes.get('/phisicians/:id', PhisicianController.show);
