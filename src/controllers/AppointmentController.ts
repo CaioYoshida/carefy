@@ -125,14 +125,18 @@ class AppointmentController {
       return response.status(400).json({ message: 'start cannot be empty' });
     }
 
-    appointment.patient_id = patient_id;
-    appointment.phisician_id = phisician_id;
     appointment.start = parseISO(start);
     appointment.end = addHours(parseISO(start), 1);
 
     await appointmentRepository.save(appointment);
+    await appointmentRepository.query(
+      `UPDATE APPOINTMENTS SET PATIENT_ID = '${patient_id}' WHERE ID = '${appointment_id}'`,
+    );
+    await appointmentRepository.query(
+      `UPDATE APPOINTMENTS SET PHISICIAN_ID = '${phisician_id}' WHERE ID = '${appointment_id}'`,
+    );
 
-    return response.status(204).json({ message: 'update succeed' });
+    return response.status(204).json({ message: 'upload succeed' });
   }
 
   public async delete(request: Request, response: Response) {
