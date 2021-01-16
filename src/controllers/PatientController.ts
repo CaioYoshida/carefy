@@ -3,8 +3,14 @@ import { getRepository } from 'typeorm';
 
 import Patient from '../models/Patient';
 
+interface PatientRequest extends Request {
+  query: {
+    search: string;
+  };
+}
+
 class PatientController {
-  public async index(request: Request, response: Response) {
+  public async index(request: PatientRequest, response: Response) {
     const patientRepository = getRepository(Patient);
     const { search } = request.query;
     let patients: Array<Patient> = [];

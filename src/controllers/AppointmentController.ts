@@ -4,8 +4,15 @@ import { addHours, parseISO, isAfter, isBefore } from 'date-fns';
 
 import Appointment from '../models/Appointment';
 
+interface AppointmentRequest extends Request {
+  query: {
+    fromDate: string;
+    toDate: string;
+  };
+}
+
 class AppointmentController {
-  public async index(request: Request, response: Response) {
+  public async index(request: AppointmentRequest, response: Response) {
     const appointmentRepository = getRepository(Appointment);
     const { fromDate, toDate } = request.query;
     let appointments: Array<Appointment> = [];
