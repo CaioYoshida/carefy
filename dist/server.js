@@ -14,6 +14,6 @@ var app = express_1.default();
 app.use(cors_1.default());
 app.use(express_1.default.json());
 app.use(routes_1.default);
-app.listen(3333, function () {
+app.listen(process.env.PORT || 3333, function () {
     console.log('server started on port 3333');
 });
